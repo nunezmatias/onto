@@ -1,0 +1,156 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ontorag"
+version = "0.2.0"
+description = "Ontology-First Retrieval Augmented Generation - Build semantically rich RAG systems with knowledge graphs"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "OntoRAG Team", email = "ontorag@example.com" }
+]
+keywords = [
+    "rag",
+    "retrieval-augmented-generation",
+    "knowledge-graph",
+    "ontology",
+    "nlp",
+    "llm",
+    "semantic-search",
+    "information-extraction",
+    "arxiv",
+    "semantic-scholar",
+    "openalex",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Text Processing :: Linguistic",
+]
+
+# Core dependencies - minimal installation
+dependencies = [
+    "networkx>=3.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+# Vector store and embeddings
+vector = [
+    "chromadb>=0.4.0",
+    "sentence-transformers>=2.2.0",
+]
+
+# Corpus collection from academic sources
+corpus = [
+    "arxiv>=2.0.0",
+    "requests>=2.28.0",
+    "beautifulsoup4>=4.12.0",
+]
+
+# NLP processing
+nlp = [
+    "spacy>=3.5.0",
+    "nltk>=3.8.0",
+]
+
+# LLM providers
+openai = ["openai>=1.0.0"]
+anthropic = ["anthropic>=0.18.0"]
+huggingface = ["huggingface-hub>=0.20.0"]
+google = ["google-generativeai>=0.3.0"]
+
+# Visualization and analysis
+viz = [
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "wordcloud>=1.9.0",
+    "pandas>=2.0.0",
+]
+
+# All LLM providers
+llm = [
+    "openai>=1.0.0",
+    "anthropic>=0.18.0",
+    "huggingface-hub>=0.20.0",
+    "google-generativeai>=0.3.0",
+]
+
+# Complete installation
+all = [
+    "networkx>=3.0",
+    "pydantic>=2.0",
+    "chromadb>=0.4.0",
+    "sentence-transformers>=2.2.0",
+    "arxiv>=2.0.0",
+    "requests>=2.28.0",
+    "beautifulsoup4>=4.12.0",
+    "spacy>=3.5.0",
+    "nltk>=3.8.0",
+    "openai>=1.0.0",
+    "anthropic>=0.18.0",
+    "huggingface-hub>=0.20.0",
+    "google-generativeai>=0.3.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "wordcloud>=1.9.0",
+    "pandas>=2.0.0",
+]
+
+# Development
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+# Documentation
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ontorag/ontorag"
+Documentation = "https://ontorag.readthedocs.io"
+Repository = "https://github.com/ontorag/ontorag"
+Issues = "https://github.com/ontorag/ontorag/issues"
+Changelog = "https://github.com/ontorag/ontorag/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ontorag"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W", "I", "N", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_ignores = true
