@@ -130,11 +130,28 @@ class GraphVisualizer:
                     "label": relation,
                     "title": f"{relation}<br>{data.get('text_context', '')[:100]}",
                     "color": RELATION_COLORS.get(relation, "#999999"),
-                    "arrows": "to",
-                })
-                edge_id += 1
+                "arrows": "to",
+            })
+            edge_id += 1
         
         return {"nodes": nodes, "edges": edges}
+    
+    def _format_stats(self) -> Dict[str, Any]:
+        """Convierte GraphStatistics en un dict anidado para las plantillas HTML."""
+        stats_obj = self.kg.get_statistics()
+        return {
+            "nodes": {
+                "total": stats_obj.num_nodes,
+                "by_type": stats_obj.nodes_by_type,
+            },
+            "edges": {
+                "total": stats_obj.num_edges,
+                "by_relation": stats_obj.edges_by_relation,
+            },
+            "graph_metrics": {
+                "top_connected_nodes": stats_obj.top_degree,
+            },
+        }
     
     def generate_html(
         self,
@@ -160,7 +177,7 @@ class GraphVisualizer:
         graph_data = self._prepare_graph_data(max_nodes)
         
         # Calcular estadísticas
-        stats = self.kg.get_statistics()
+        stats = self._format_stats()
         
         # Generar leyenda de tipos
         legend_items = []
@@ -416,7 +433,7 @@ class GraphVisualizer:
         Returns:
             Ruta del archivo generado
         """
-        stats = self.kg.get_statistics()
+        stats = self._format_stats()
         graph_data = self._prepare_graph_data(max_nodes=300)
         
         # Preparar datos para gráficos

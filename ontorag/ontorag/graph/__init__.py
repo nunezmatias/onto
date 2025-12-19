@@ -523,7 +523,37 @@ class KnowledgeGraph:
     @property
     def num_edges(self) -> int:
         return self.graph.number_of_edges()
-    
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # RESUMEN Y BÚSQUEDA HÍBRIDA
+    # ═══════════════════════════════════════════════════════════════════════════
+
+    def summary(self) -> str:
+        """Resumen legible del grafo (alias conveniencia)."""
+        return self.get_statistics().summary()
+
+    def search_hybrid(
+        self,
+        query: str,
+        k: int = 20,
+        semantic_weight: float = 0.6,
+        structural_weight: float = 0.4,
+        max_depth: int = 2,
+        num_seeds: int = 5,
+    ):
+        """Búsqueda híbrida delegando en HybridSearcher."""
+        from ontorag.search import HybridSearcher  # import local para evitar ciclos
+
+        searcher = HybridSearcher(self)
+        return searcher.search(
+            query=query,
+            k=k,
+            semantic_weight=semantic_weight,
+            structural_weight=structural_weight,
+            max_depth=max_depth,
+            num_seeds=num_seeds,
+        )
+
     # ═══════════════════════════════════════════════════════════════════════════
     # ESTADÍSTICAS
     # ═══════════════════════════════════════════════════════════════════════════
@@ -751,6 +781,7 @@ class GraphBuilder:
         ...     .add_edge("n1", "n2", "RELATES_TO")
         ...     .build())
     """
+    
     
     def __init__(self, name: str = "graph"):
         self.name = name
