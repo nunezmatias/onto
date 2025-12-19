@@ -782,6 +782,7 @@ class GraphBuilder:
         ...     .build())
     """
     
+    
     def __init__(self, name: str = "graph"):
         self.name = name
         self.ontology = None
