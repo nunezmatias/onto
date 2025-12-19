@@ -1,0 +1,253 @@
+{
+  "name": "climate_adaptation",
+  "description": "Ontology for climate change adaptation research",
+  "version": "1.0.0",
+  "metadata": {
+    "author": "OntoRAG Team",
+    "domain": "Climate Science",
+    "language": "en"
+  },
+  "classes": {
+    "entity": {
+      "name": "Entity",
+      "description": "Root class for all entities"
+    },
+    "climate_hazard": {
+      "name": "Climate Hazard",
+      "description": "Natural hazards exacerbated by climate change",
+      "parent": "entity",
+      "synonyms": ["hazard", "climate risk", "climate threat"]
+    },
+    "flood": {
+      "name": "Flood",
+      "description": "Overflow of water onto normally dry land",
+      "parent": "climate_hazard",
+      "synonyms": ["flooding", "inundation", "flash flood", "coastal flood", "river flood"]
+    },
+    "drought": {
+      "name": "Drought",
+      "description": "Extended period of water scarcity",
+      "parent": "climate_hazard",
+      "synonyms": ["water scarcity", "water stress", "aridity", "dry spell"]
+    },
+    "heat_wave": {
+      "name": "Heat Wave",
+      "description": "Extended period of extreme heat",
+      "parent": "climate_hazard",
+      "synonyms": ["heatwave", "extreme heat", "heat stress", "urban heat island", "thermal stress"]
+    },
+    "sea_level_rise": {
+      "name": "Sea Level Rise",
+      "description": "Long-term increase in sea levels",
+      "parent": "climate_hazard",
+      "synonyms": ["rising seas", "coastal flooding", "storm surge", "tidal flooding"]
+    },
+    "wildfire": {
+      "name": "Wildfire",
+      "description": "Uncontrolled fire in wildland areas",
+      "parent": "climate_hazard",
+      "synonyms": ["forest fire", "bushfire", "wildland fire"]
+    },
+    "storm": {
+      "name": "Storm",
+      "description": "Severe weather event with strong winds",
+      "parent": "climate_hazard",
+      "synonyms": ["hurricane", "typhoon", "cyclone", "tropical storm", "extreme weather", "DANA"]
+    },
+    "adaptation_measure": {
+      "name": "Adaptation Measure",
+      "description": "Actions to reduce vulnerability to climate impacts",
+      "parent": "entity",
+      "synonyms": ["adaptation strategy", "climate measure", "intervention", "climate action"]
+    },
+    "green_infrastructure": {
+      "name": "Green Infrastructure",
+      "description": "Nature-based solutions for climate adaptation",
+      "parent": "adaptation_measure",
+      "synonyms": ["nature-based solution", "NbS", "ecosystem-based adaptation", "EbA", "blue-green infrastructure"]
+    },
+    "green_roof": {
+      "name": "Green Roof",
+      "description": "Vegetated roof system for temperature regulation and stormwater management",
+      "parent": "green_infrastructure",
+      "synonyms": ["vegetated roof", "living roof", "roof garden", "eco-roof"]
+    },
+    "rain_garden": {
+      "name": "Rain Garden",
+      "description": "Planted depression for stormwater management",
+      "parent": "green_infrastructure",
+      "synonyms": ["bioswale", "bioretention", "stormwater garden", "infiltration garden"]
+    },
+    "urban_forest": {
+      "name": "Urban Forest",
+      "description": "Trees and vegetation in urban areas for cooling",
+      "parent": "green_infrastructure",
+      "synonyms": ["street trees", "tree canopy", "urban trees", "tree planting", "urban greening"]
+    },
+    "wetland_restoration": {
+      "name": "Wetland Restoration",
+      "description": "Restoration of wetland ecosystems for flood control",
+      "parent": "green_infrastructure",
+      "synonyms": ["wetland", "marsh restoration", "mangrove restoration", "coastal wetland"]
+    },
+    "grey_infrastructure": {
+      "name": "Grey Infrastructure",
+      "description": "Engineered infrastructure for climate adaptation",
+      "parent": "adaptation_measure",
+      "synonyms": ["hard infrastructure", "engineered solution", "built infrastructure"]
+    },
+    "flood_barrier": {
+      "name": "Flood Barrier",
+      "description": "Physical barrier to prevent flooding",
+      "parent": "grey_infrastructure",
+      "synonyms": ["sea wall", "dike", "levee", "storm surge barrier", "flood wall", "dam"]
+    },
+    "drainage_system": {
+      "name": "Drainage System",
+      "description": "System for managing stormwater",
+      "parent": "grey_infrastructure",
+      "synonyms": ["stormwater system", "drainage", "retention pond", "detention basin"]
+    },
+    "early_warning_system": {
+      "name": "Early Warning System",
+      "description": "System for alerting about impending hazards",
+      "parent": "adaptation_measure",
+      "synonyms": ["EWS", "warning system", "alert system", "flood forecasting", "drought monitoring"]
+    },
+    "climate_smart_agriculture": {
+      "name": "Climate-Smart Agriculture",
+      "description": "Agricultural practices for climate resilience",
+      "parent": "adaptation_measure",
+      "synonyms": ["CSA", "drought-resistant crops", "conservation agriculture", "resilient farming"]
+    },
+    "sector": {
+      "name": "Sector",
+      "description": "Economic or social sector affected by climate",
+      "parent": "entity"
+    },
+    "agriculture": {
+      "name": "Agriculture",
+      "description": "Farming and food production sector",
+      "parent": "sector",
+      "synonyms": ["farming", "crops", "food production", "agricultural sector"]
+    },
+    "infrastructure_sector": {
+      "name": "Infrastructure",
+      "description": "Physical infrastructure sector",
+      "parent": "sector",
+      "synonyms": ["buildings", "roads", "utilities", "critical infrastructure"]
+    },
+    "health": {
+      "name": "Health",
+      "description": "Public health sector",
+      "parent": "sector",
+      "synonyms": ["public health", "healthcare", "health sector"]
+    },
+    "water_resources": {
+      "name": "Water Resources",
+      "description": "Water management sector",
+      "parent": "sector",
+      "synonyms": ["water sector", "water management", "hydrology"]
+    },
+    "location": {
+      "name": "Location",
+      "description": "Geographic location",
+      "parent": "entity",
+      "synonyms": ["place", "area", "region"]
+    },
+    "coastal_area": {
+      "name": "Coastal Area",
+      "description": "Area near the coast",
+      "parent": "location",
+      "synonyms": ["coast", "coastal zone", "shoreline", "littoral"]
+    },
+    "urban_area": {
+      "name": "Urban Area",
+      "description": "City or urban region",
+      "parent": "location",
+      "synonyms": ["city", "urban", "metropolitan", "municipality"]
+    }
+  },
+  "relations": {
+    "MITIGATES": {
+      "name": "mitigates",
+      "description": "Subject reduces the impact of object",
+      "relation_type": "mitigative",
+      "domain": ["adaptation_measure"],
+      "range": ["climate_hazard"],
+      "synonyms": ["reduces", "lessens", "alleviates", "diminishes", "attenuates"]
+    },
+    "PROTECTS": {
+      "name": "protects",
+      "description": "Subject protects against object",
+      "relation_type": "protective",
+      "domain": ["adaptation_measure"],
+      "range": ["climate_hazard", "sector"],
+      "synonyms": ["defends", "shields", "guards", "safeguards"]
+    },
+    "PREVENTS": {
+      "name": "prevents",
+      "description": "Subject prevents object from occurring",
+      "relation_type": "protective",
+      "domain": ["adaptation_measure"],
+      "range": ["climate_hazard"],
+      "synonyms": ["stops", "blocks", "averts", "forestalls"]
+    },
+    "CAUSES": {
+      "name": "causes",
+      "description": "Subject causes object",
+      "relation_type": "causal",
+      "domain": ["climate_hazard"],
+      "range": ["climate_hazard"],
+      "synonyms": ["leads to", "results in", "triggers", "induces"]
+    },
+    "AFFECTS": {
+      "name": "affects",
+      "description": "Subject has impact on object",
+      "relation_type": "causal",
+      "domain": ["climate_hazard"],
+      "range": ["sector", "location"],
+      "synonyms": ["impacts", "influences", "damages"]
+    },
+    "LOCATED_IN": {
+      "name": "located in",
+      "description": "Subject is located in object",
+      "relation_type": "spatial",
+      "synonyms": ["in", "at", "within", "situated in"]
+    },
+    "IMPLEMENTED_IN": {
+      "name": "implemented in",
+      "description": "Measure is implemented in location",
+      "relation_type": "spatial",
+      "domain": ["adaptation_measure"],
+      "range": ["location"],
+      "synonyms": ["deployed in", "installed in", "applied in"]
+    },
+    "IS_A": {
+      "name": "is a",
+      "description": "Subject is a type of object",
+      "relation_type": "hierarchical",
+      "is_transitive": true,
+      "synonyms": ["type of", "kind of", "instance of"]
+    },
+    "PART_OF": {
+      "name": "part of",
+      "description": "Subject is part of object",
+      "relation_type": "hierarchical",
+      "is_transitive": true,
+      "synonyms": ["component of", "belongs to", "element of"]
+    },
+    "REDUCES_BY": {
+      "name": "reduces by",
+      "description": "Quantified reduction (e.g., reduces temperature by 2°C)",
+      "relation_type": "functional",
+      "synonyms": ["decreases by", "lowers by", "cuts by"]
+    },
+    "COSTS": {
+      "name": "costs",
+      "description": "Implementation cost",
+      "relation_type": "functional",
+      "synonyms": ["priced at", "valued at"]
+    }
+  }
+}
