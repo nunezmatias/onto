@@ -189,7 +189,25 @@ class GraphStatistics:
     ontology_coverage: Dict[str, float] = field(default_factory=dict)
     
     def to_dict(self) -> Dict:
-        return {k: v for k, v in self.__dict__.items()}
+        data = {k: v for k, v in self.__dict__.items()}
+        # Compatibilidad con formatos previos que esperaban nodos/aristas anidados
+        data["nodes"] = {
+            "total": self.num_nodes,
+            "by_type": self.nodes_by_type,
+        }
+        data["edges"] = {
+            "total": self.num_edges,
+            "by_relation": self.edges_by_relation,
+        }
+        data["graph_metrics"] = {
+            "top_connected_nodes": self.top_degree,
+        }
+        return data
+    
+    # Compatibilidad: permitir acceso estilo dict (ej. stats["nodes"]["by_type"])
+    def __getitem__(self, key):
+        data = self.to_dict()
+        return data[key]
     
     def summary(self) -> str:
         lines = [
@@ -523,7 +541,37 @@ class KnowledgeGraph:
     @property
     def num_edges(self) -> int:
         return self.graph.number_of_edges()
-    
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # RESUMEN Y BÚSQUEDA HÍBRIDA
+    # ═══════════════════════════════════════════════════════════════════════════
+
+    def summary(self) -> str:
+        """Resumen legible del grafo (alias conveniencia)."""
+        return self.get_statistics().summary()
+
+    def search_hybrid(
+        self,
+        query: str,
+        k: int = 20,
+        semantic_weight: float = 0.6,
+        structural_weight: float = 0.4,
+        max_depth: int = 2,
+        num_seeds: int = 5,
+    ):
+        """Búsqueda híbrida delegando en HybridSearcher."""
+        from ontorag.search import HybridSearcher  # import local para evitar ciclos
+
+        searcher = HybridSearcher(self)
+        return searcher.search(
+            query=query,
+            k=k,
+            semantic_weight=semantic_weight,
+            structural_weight=structural_weight,
+            max_depth=max_depth,
+            num_seeds=num_seeds,
+        )
+
     # ═══════════════════════════════════════════════════════════════════════════
     # ESTADÍSTICAS
     # ═══════════════════════════════════════════════════════════════════════════
