@@ -578,12 +578,26 @@ Por favor, responde en {response_language} basándote únicamente en el contexto
         ]
         
         for i, result in enumerate(context.search_results[:k], 1):
-            lines.append(f"{i}. [{result.item_type.upper()}] {result.item_id}")
-            lines.append(f"   Score: {result.score:.4f} | Fuente: {result.source}")
-            if result.item_type == "node":
+            # Aceptar Enum o str para item_type/source
+            item_type = (
+                result.item_type.value
+                if hasattr(result.item_type, "value")
+                else str(result.item_type)
+            )
+            source = (
+                result.source.value
+                if hasattr(result.source, "value")
+                else str(result.source)
+            )
+
+            lines.append(f"{i}. [{item_type.upper()}] {result.item_id}")
+            lines.append(f"   Score: {result.score:.4f} | Fuente: {source}")
+            if item_type == "node":
                 lines.append(f"   Tipo: {result.data.get('type')}")
-            elif result.item_type == "edge":
-                lines.append(f"   Relación: {result.data.get('source')} -> {result.data.get('target')}")
+            elif item_type == "edge":
+                lines.append(
+                    f"   Relación: {result.data.get('source')} -> {result.data.get('target')}"
+                )
             lines.append("")
         
         lines.extend([

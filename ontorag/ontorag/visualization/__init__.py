@@ -136,6 +136,52 @@ class GraphVisualizer:
         
         return {"nodes": nodes, "edges": edges}
     
+    def _format_stats(self) -> Dict[str, Any]:
+        """Convierte GraphStatistics en un dict anidado para las plantillas HTML."""
+        stats_obj = self.kg.get_statistics()
+        return {
+            "nodes": {
+                "total": stats_obj.num_nodes,
+                "by_type": stats_obj.nodes_by_type,
+            },
+            "edges": {
+                "total": stats_obj.num_edges,
+                "by_relation": stats_obj.edges_by_relation,
+            },
+            "graph_metrics": {
+                "top_connected_nodes": stats_obj.top_degree,
+            },
+        }
+
+    @staticmethod
+    def _ensure_stats_dict(stats: Any) -> Dict[str, Any]:
+        """Acepta GraphStatistics o dict y siempre retorna un dict con la misma forma."""
+        # Si ya es dict, úsalo tal cual
+        if isinstance(stats, dict):
+            return stats
+        # GraphStatistics: usar to_dict() y re-mapear claves esperadas
+        if hasattr(stats, "to_dict"):
+            data = stats.to_dict()
+            return {
+                "nodes": {
+                    "total": data.get("num_nodes", 0),
+                    "by_type": data.get("nodes_by_type", {}),
+                },
+                "edges": {
+                    "total": data.get("num_edges", 0),
+                    "by_relation": data.get("edges_by_relation", {}),
+                },
+                "graph_metrics": {
+                    "top_connected_nodes": data.get("top_degree", []),
+                },
+            }
+        # Fallback vacío si llega otro tipo inesperado
+        return {
+            "nodes": {"total": 0, "by_type": {}},
+            "edges": {"total": 0, "by_relation": {}},
+            "graph_metrics": {"top_connected_nodes": []},
+        }
+    
     def generate_html(
         self,
         output_path: str,
@@ -160,7 +206,7 @@ class GraphVisualizer:
         graph_data = self._prepare_graph_data(max_nodes)
         
         # Calcular estadísticas
-        stats = self.kg.get_statistics()
+        stats = self._ensure_stats_dict(self._format_stats())
         
         # Generar leyenda de tipos
         legend_items = []
@@ -416,7 +462,7 @@ class GraphVisualizer:
         Returns:
             Ruta del archivo generado
         """
-        stats = self.kg.get_statistics()
+        stats = self._ensure_stats_dict(self._format_stats())
         graph_data = self._prepare_graph_data(max_nodes=300)
         
         # Preparar datos para gráficos
