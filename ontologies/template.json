@@ -1,0 +1,83 @@
+{
+  "_comment": "TEMPLATE: Copy this file and modify for your domain",
+  "_instructions": [
+    "1. Change 'name' to your domain name",
+    "2. Add your entity classes under 'classes'",
+    "3. Add your relations under 'relations'",
+    "4. Each class needs: id, name, description",
+    "5. Add 'parent' to create hierarchies (IS-A relationships)",
+    "6. Add 'synonyms' for better entity matching",
+    "7. Relations need: id (UPPER_CASE), name, description",
+    "8. Set 'domain' and 'range' to constrain valid triples"
+  ],
+  
+  "name": "my_domain",
+  "description": "Description of your domain",
+  "version": "1.0.0",
+  "metadata": {
+    "author": "Your Name",
+    "domain": "Your Field",
+    "language": "en"
+  },
+  
+  "classes": {
+    "entity": {
+      "name": "Entity",
+      "description": "Root class for all entities"
+    },
+    
+    "category_a": {
+      "name": "Category A",
+      "description": "First main category",
+      "parent": "entity",
+      "synonyms": ["synonym1", "synonym2"]
+    },
+    
+    "subcategory_a1": {
+      "name": "Subcategory A1",
+      "description": "A specific type of Category A",
+      "parent": "category_a",
+      "synonyms": ["alt name", "other name"]
+    },
+    
+    "category_b": {
+      "name": "Category B",
+      "description": "Second main category",
+      "parent": "entity",
+      "synonyms": []
+    }
+  },
+  
+  "relations": {
+    "RELATES_TO": {
+      "name": "relates to",
+      "description": "Generic association (consider using more specific relations)",
+      "relation_type": "associative",
+      "synonyms": ["connected to", "linked to"]
+    },
+    
+    "CAUSES": {
+      "name": "causes",
+      "description": "Subject causes object",
+      "relation_type": "causal",
+      "domain": ["category_a"],
+      "range": ["category_b"],
+      "synonyms": ["leads to", "results in"]
+    },
+    
+    "PART_OF": {
+      "name": "part of",
+      "description": "Subject is component of object",
+      "relation_type": "hierarchical",
+      "is_transitive": true,
+      "synonyms": ["component of", "belongs to"]
+    },
+    
+    "LOCATED_IN": {
+      "name": "located in",
+      "description": "Spatial relationship",
+      "relation_type": "spatial",
+      "synonyms": ["in", "at", "within"]
+    }
+  }
+}
