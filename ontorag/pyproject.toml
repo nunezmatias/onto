@@ -1,0 +1,98 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ontorag"
+version = "0.1.0"
+description = "Ontology-First Retrieval Augmented Generation - Build semantically rich RAG systems with knowledge graphs"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "OntoRAG Team", email = "ontorag@example.com" }
+]
+keywords = [
+    "rag",
+    "retrieval-augmented-generation",
+    "knowledge-graph",
+    "ontology",
+    "nlp",
+    "llm",
+    "semantic-search",
+    "graph-database",
+    "information-extraction",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Text Processing :: Linguistic",
+]
+
+dependencies = [
+    "networkx>=3.0",
+    "chromadb>=0.4.0",
+    "sentence-transformers>=2.2.0",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.0.0"]
+anthropic = ["anthropic>=0.18.0"]
+all = [
+    "openai>=1.0.0",
+    "anthropic>=0.18.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ontorag/ontorag"
+Documentation = "https://ontorag.readthedocs.io"
+Repository = "https://github.com/ontorag/ontorag"
+Issues = "https://github.com/ontorag/ontorag/issues"
+Changelog = "https://github.com/ontorag/ontorag/blob/main/CHANGELOG.md"
+
+[project.scripts]
+ontorag = "ontorag.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ontorag"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W", "I", "N", "D", "UP"]
+ignore = ["D100", "D104"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_ignores = true
