@@ -4,7 +4,7 @@ Colab smoke test for OntoRAG + Gemini on this branch.
 Usage in Google Colab (single notebook cell):
 
 ```bash
-!git clone -b onto2 https://github.com/nunezmatias/onto.git
+!git clone https://github.com/nunezmatias/onto.git
 %cd /content/onto
 !pip install -e .
 !pip install networkx chromadb sentence-transformers google-generativeai
@@ -77,7 +77,7 @@ def configure_gemini_llm(
 def build_graph(documents: List[Dict[str, str]]) -> KnowledgeGraph:
     """Create a KnowledgeGraph from a list of document dicts."""
     ontology = create_climate_ontology()
-    extractor = RuleBasedExtractor(ontology=ontology)
+    extractor = RuleBasedExtractor()
     kg = KnowledgeGraph(ontology=ontology)
 
     node_accumulator: Dict[str, Dict] = {}
