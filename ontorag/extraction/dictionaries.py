@@ -30,20 +30,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 # =============================================================================
 
 CLIMATE_ENTITIES = {
-    """
-    Climate adaptation domain entities.
-    
-    Categories:
-    - MEASURE: Adaptation measures and interventions
-    - HAZARD: Climate hazards and risks
-    - LOCATION: Geographic areas
-    - IMPACT: Effects and outcomes
-    - QUANTITY: Numerical values with context
-    """
-    
-    # =========================================================================
     # ADAPTATION MEASURES
-    # =========================================================================
     "MEASURE": [
         # Green infrastructure
         "green roof", "green roofs", "green_roof",
@@ -270,12 +257,6 @@ CLIMATE_ENTITIES = {
 # =============================================================================
 
 RELATION_PATTERNS = {
-    """
-    Patterns for detecting relations in text.
-    
-    Each pattern is (regex_pattern, relation_type)
-    """
-    
     "MITIGATES": [
         r"(\w+[\w\s]*?)\s+mitigates?\s+(\w+[\w\s]*)",
         r"(\w+[\w\s]*?)\s+reduces?\s+(?:the\s+)?(?:effects?\s+of\s+)?(\w+[\w\s]*)",
@@ -392,13 +373,14 @@ class EntityDictionary:
         for entity_type, terms in self.entities.items():
             patterns[entity_type] = []
             for term in terms:
-                # Create case-insensitive pattern with word boundaries
-                escaped = re.escape(term)
-                pattern = re.compile(
-                    rf'\b{escaped}\b',
-                    re.IGNORECASE
-                )
-                patterns[entity_type].append((term, pattern))
+                variants = {term}
+                # Basic plural support (e.g., roof -> roofs)
+                if term and term[-1].lower() != "s":
+                    variants.add(f"{term}s")
+                for variant in variants:
+                    escaped = re.escape(variant)
+                    pattern = re.compile(rf"\b{escaped}\b", re.IGNORECASE)
+                    patterns[entity_type].append((variant, pattern))
         
         return patterns
     
